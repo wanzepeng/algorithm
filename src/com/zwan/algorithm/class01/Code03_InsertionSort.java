@@ -1,15 +1,16 @@
-package com.zwan.algorithm.lesson01;
+package com.zwan.algorithm.class01;
 
 import java.util.Arrays;
 import java.util.Random;
 
 /**
- * 选择排序
+ * 插入排序
  *
  * @author zwan
- * Create by zwan on 2022/5/17 23:10
+ * Create by zwan on 2022/5/18 22:23
  */
-public class SelectionSort {
+public class Code03_InsertionSort {
+
     public static void main(String[] args) {
         int testNum = 500000;
         int maxSize = 100;
@@ -18,45 +19,50 @@ public class SelectionSort {
         for (int i = 0; i < testNum; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            selectionSort(arr1);
+            insertionSort(arr1);
             comparator(arr2);
             if (!isEqual(arr1, arr2)) {
                 succeed = false;
-                printArray(arr1);
-                printArray(arr2);
+//                printArray(arr1);
+//                printArray(arr2);
                 break;
             }
         }
         System.out.println(succeed ? "Nice!" : "Fucking fucked!");
+
+        int[] arr = generateRandomArray(maxSize, maxValue);
+        printArray(arr);
+        insertionSort(arr);
+        printArray(arr);
     }
 
-    public static void selectionSort(int[] array) {
+    public static void insertionSort(int[] array) {
         if (array == null || array.length < 2) {
             return;
         }
-        for (int i = 0; i < array.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < array.length; j++) {
-                minIndex = array[minIndex] < array[j] ? minIndex : j;
+        for (int i = 1; i < array.length; i++) {
+            for (int j = i - 1; j >= 0 && array[j] > array[j + 1]; j--) {
+                swap(array, j, j + 1);
             }
-            swap(array, minIndex, i);
         }
+
     }
 
-    private static void swap(int[] array, int i, int j) {
-        // 因为可能会有同数组中统一位置交换，导致数据清零。所以不可使用异或运算交换。
-        /*array[i] = array[i] ^ array[j];
-        array[j] = array[i] ^ array[j];
-        array[i] = array[i] ^ array[j];*/
 
-        int tmp = array[i];
+    private static void swap(int[] array, int i, int j) {
+        // 因为不会出现数组中统一位置数比较，所以可用异或运算交换
+        array[i] = array[i] ^ array[j];
+        array[j] = array[i] ^ array[j];
+        array[i] = array[i] ^ array[j];
+
+        /*int tmp = array[i];
         array[i] = array[j];
-        array[j] = tmp;
+        array[j] = tmp;*/
     }
 
     public static int[] generateRandomArray(int maxSize, int maxValue) {
         Random random = new Random();
-        int[] arr = new int[ random.nextInt(maxSize)];
+        int[] arr = new int[random.nextInt(maxSize)];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = random.nextInt(maxValue) - random.nextInt(maxValue);
         }

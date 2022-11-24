@@ -1,15 +1,15 @@
-package com.zwan.algorithm.lesson01;
+package com.zwan.algorithm.class01;
 
 import java.util.Arrays;
 import java.util.Random;
 
 /**
- * 插入排序
+ * 冒泡排序
+ *
  * @author zwan
- * Create by zwan on 2022/5/18 22:23
+ * Create by zwan on 2022/5/18 21:59
  */
-public class InsertionSort {
-
+public class Code02_BubbleSort {
     public static void main(String[] args) {
         int testNum = 500000;
         int maxSize = 100;
@@ -18,7 +18,7 @@ public class InsertionSort {
         for (int i = 0; i < testNum; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            insertionSort(arr1);
+            bubbleSort(arr1);
             comparator(arr2);
             if (!isEqual(arr1, arr2)) {
                 succeed = false;
@@ -31,15 +31,21 @@ public class InsertionSort {
 
         int[] arr = generateRandomArray(maxSize, maxValue);
         printArray(arr);
-        insertionSort(arr);
+        bubbleSort(arr);
         printArray(arr);
     }
 
-    public static void insertionSort(int[] array) {
+    public static void bubbleSort(int[] array) {
         if (array == null || array.length < 2) {
             return;
         }
-        
+        for (int i = array.length - 1; i > 0; i--) {
+            for (int j = 0; j < array.length - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    swap(array, j, j + 1);
+                }
+            }
+        }
     }
 
     private static void swap(int[] array, int i, int j) {
